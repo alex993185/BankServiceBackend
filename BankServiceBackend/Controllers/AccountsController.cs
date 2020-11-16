@@ -39,15 +39,14 @@ namespace BankServiceBackend.Controllers
 
             return account;
         }
-/*
 
         // PUT: api/Accounts/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Save(long id, Account account)
+        [HttpPut("{accountNumber}")]
+        public async Task<IActionResult> Save(long accountNumber, Account account)
         {
-            if (id != account.Id)
+            if (accountNumber != account.AccountNumber)
             {
                 return BadRequest();
             }
@@ -60,7 +59,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AccountExists(id))
+                if (!AccountExists(accountNumber))
                 {
                     return NotFound();
                 }
@@ -71,7 +70,7 @@ namespace BankServiceBackend.Controllers
             }
 
             return NoContent();
-        }*/
+        }
 
         // POST: api/Accounts
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

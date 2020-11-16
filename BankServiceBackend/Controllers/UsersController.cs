@@ -27,7 +27,7 @@ namespace BankServiceBackend.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
+        [HttpGet("{customerNumber}")]
         public async Task<ActionResult<User>> Get(long customerNumber)
         {
             var user = await _context.Users.FindAsync(customerNumber);
@@ -43,7 +43,7 @@ namespace BankServiceBackend.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
+        [HttpPut("{customerNumber}")]
         public async Task<IActionResult> Save(long customerNumber, User user)
         {
             if (customerNumber != user.CustomerNumber)
