@@ -31,10 +31,9 @@ namespace BankServiceBackend.Controllers
         public async Task<ActionResult<User>> Get(long customerNumber)
         {
             var user = await _context.Users.FindAsync(customerNumber);
-
             if (user == null)
             {
-                return NotFound();
+                return NotFound("The user does not exist!");
             }
 
             return user;
@@ -46,7 +45,7 @@ namespace BankServiceBackend.Controllers
         {
             if (!UserExists(user.CustomerNumber))
             {
-                return NotFound("The user does not exist!");
+                return NotFound("The user does not exist. Updating failed!");
             }
 
             _context.Entry(user).State = EntityState.Modified;
@@ -56,10 +55,10 @@ namespace BankServiceBackend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return Conflict();
+                return Conflict("Updating user failed!");
             }
 
-            return NoContent();
+            return CreatedAtAction("Get", new { customerNumber = user.CustomerNumber }, user);
         }
 
         // POST: api/Users
@@ -79,7 +78,7 @@ namespace BankServiceBackend.Controllers
             var user = await _context.Users.FindAsync(customerNumber);
             if (user == null)
             {
-                return NotFound();
+                return NotFound("The user does not exist. Deleting failed!");
             }
 
             _context.Users.Remove(user);
