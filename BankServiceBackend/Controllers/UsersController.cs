@@ -39,10 +39,15 @@ namespace BankServiceBackend.Controllers
             return user;
         }
 
-        // PUT: api/Users
-        [HttpPut]
-        public async Task<IActionResult> Update(User user)
+        // PUT: api/Users/1
+        [HttpPut("{customerNumber}")]
+        public async Task<IActionResult> Update(long customerNumber, User user)
         {
+            if (customerNumber != user.CustomerNumber)
+            {
+                return BadRequest();
+            }
+
             if (!UserExists(user.CustomerNumber))
             {
                 return NotFound("The user does not exist. Updating failed!");

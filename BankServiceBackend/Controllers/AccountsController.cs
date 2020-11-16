@@ -26,25 +26,24 @@ namespace BankServiceBackend.Controllers
             return await _context.Accounts.ToListAsync();
         }
 
-        // GET: api/Accounts/5
+        // GET: api/Accounts/1
         [HttpGet("{accountNumber}")]
         public async Task<ActionResult<Account>> Get(long accountNumber)
         {
             var account = await _context.Accounts.FindAsync(accountNumber);
-
             if (account == null)
             {
-                return NotFound();
+                return NotFound("The account does not exist!");
             }
 
             return account;
         }
 
-        // PUT: api/Accounts/5
+        // PUT: api/Accounts/1
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{accountNumber}")]
-        public async Task<IActionResult> Save(long accountNumber, Account account)
+        public async Task<IActionResult> Update(long accountNumber, Account account)
         {
             if (accountNumber != account.AccountNumber)
             {
@@ -61,7 +60,7 @@ namespace BankServiceBackend.Controllers
             {
                 if (!AccountExists(accountNumber))
                 {
-                    return NotFound();
+                    return NotFound("The account does not exist!");
                 }
                 else
                 {
@@ -84,14 +83,14 @@ namespace BankServiceBackend.Controllers
             return CreatedAtAction("Get", new { accountNumber = account.AccountNumber }, account);
         }
 
-        // DELETE: api/Accounts/5
+        // DELETE: api/Accounts/1
         [HttpDelete("{id}")]
         public async Task<ActionResult<Account>> Delete(long accountNumber)
         {
             var account = await _context.Accounts.FindAsync(accountNumber);
             if (account == null)
             {
-                return NotFound();
+                return NotFound("The account does not exist!");
             }
 
             _context.Accounts.Remove(account);

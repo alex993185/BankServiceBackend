@@ -7,10 +7,10 @@ namespace BankServiceBackend.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long AccountNumber { get; set; } // TODO: Use for authentication, use from session
+        public long AccountNumber { get; set; }
        
         [Required]
-        public string HashedPin { get; set; } // TODO: Use for authentication
+        public string HashedPin { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -18,6 +18,6 @@ namespace BankServiceBackend.Entities
         [Required]
         public double Dispo { get; set; }
 
-        public double Credit { get; set; } // TODO: Must not be changed!
+        public double Credit { get; set; }
     }
 }
