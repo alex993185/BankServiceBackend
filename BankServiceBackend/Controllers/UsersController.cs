@@ -26,7 +26,7 @@ namespace BankServiceBackend.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        // GET: api/Users/5
+        // GET: api/Users/1
         [HttpGet("{customerNumber}")]
         public async Task<ActionResult<User>> Get(long customerNumber)
         {
@@ -40,43 +40,31 @@ namespace BankServiceBackend.Controllers
             return user;
         }
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{customerNumber}")]
-        public async Task<IActionResult> Save(long customerNumber, User user)
+        // PUT: api/Users
+        [HttpPut]
+        public async Task<IActionResult> Update(User user)
         {
-            if (customerNumber != user.CustomerNumber)
+            if (!UserExists(user.CustomerNumber))
             {
-                return BadRequest();
+                return NotFound("The user does not exist!");
             }
 
             _context.Entry(user).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(customerNumber))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Conflict();
             }
 
             return NoContent();
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<User>> Save(User user)
+        public async Task<ActionResult<User>> Create(User user)
         {
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
@@ -84,11 +72,11 @@ namespace BankServiceBackend.Controllers
             return CreatedAtAction("Get", new { customerNumber = user.CustomerNumber }, user);
         }
 
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> Delete(long id)
+        // DELETE: api/Users/1
+        [HttpDelete("{customerNumber}")]
+        public async Task<ActionResult<User>> Delete(long customerNumber)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.FindAsync(customerNumber);
             if (user == null)
             {
                 return NotFound();

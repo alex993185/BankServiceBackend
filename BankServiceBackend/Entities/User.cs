@@ -9,10 +9,7 @@ namespace BankServiceBackend.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long CustomerNumber { get; set; } // TODO: Use for authentication, use from session
-
-        [Required]
-        public string HashedPassword { get; set; } // TODO: Use for authentication
+        public long CustomerNumber { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -26,7 +23,6 @@ namespace BankServiceBackend.Entities
         [Required]
         public string Gender { get; set; }
 
-        [Required]
         public IEnumerable<Account> Accounts { get; set; }
     }
 }
