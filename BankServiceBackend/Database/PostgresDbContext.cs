@@ -1,5 +1,4 @@
-﻿using System;
-using BankServiceBackend.Entities;
+﻿using BankServiceBackend.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankServiceBackend.Database
@@ -12,5 +11,7 @@ namespace BankServiceBackend.Database
 
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<TransferTransaction> TransferTransactions { get; set; }
     }
 }

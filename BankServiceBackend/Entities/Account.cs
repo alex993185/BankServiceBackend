@@ -19,5 +19,10 @@ namespace BankServiceBackend.Entities
         public double Dispo { get; set; }
 
         public double Credit { get; set; }
+
+        public override string ToString()
+        {
+            return $"Account {Name} (Number = {AccountNumber}, Credit = {Credit}, Dispo = {Dispo})";
+        }
     }
 }

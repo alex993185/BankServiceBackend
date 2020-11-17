@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BankServiceBackend.Database;
 using BankServiceBackend.Entities;
+using BankServiceBackend.Repositories;
 
 namespace BankServiceBackend.Controllers
 {
@@ -12,25 +11,25 @@ namespace BankServiceBackend.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly PostgresDbContext _context;
+        private readonly IAccountRepository _accountRepository;
 
-        public AccountsController(PostgresDbContext context)
+        public AccountsController(IAccountRepository accountRepository)
         {
-            _context = context;
+            _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
         // GET: api/Accounts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Account>>> GetAll()
         {
-            return await _context.Accounts.ToListAsync();
+            return new ActionResult<IEnumerable<Account>>(await _accountRepository.GetAllAsync());
         }
 
         // GET: api/Accounts/1
         [HttpGet("{accountNumber}")]
         public async Task<ActionResult<Account>> Get(long accountNumber)
         {
-            var account = await _context.Accounts.FindAsync(accountNumber);
+            var account = await _accountRepository.Get(accountNumber);
             if (account == null)
             {
                 return NotFound("The account does not exist!");
@@ -50,22 +49,10 @@ namespace BankServiceBackend.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(account).State = EntityState.Modified;
-
-            try
+            var updateSuccessful = await _accountRepository.Update(accountNumber, account);
+            if (!updateSuccessful)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountExists(accountNumber))
-                {
-                    return NotFound("The account does not exist!");
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound("The account does not exist!");
             }
 
             return NoContent();
@@ -77,9 +64,7 @@ namespace BankServiceBackend.Controllers
         [HttpPost]
         public async Task<ActionResult<Account>> Save(Account account)
         {
-            _context.Accounts.Add(account);
-            await _context.SaveChangesAsync();
-
+            await _accountRepository.Save(account);
             return CreatedAtAction("Get", new { accountNumber = account.AccountNumber }, account);
         }
 
@@ -87,21 +72,14 @@ namespace BankServiceBackend.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Account>> Delete(long accountNumber)
         {
-            var account = await _context.Accounts.FindAsync(accountNumber);
+            var account = await _accountRepository.Get(accountNumber);
             if (account == null)
             {
                 return NotFound("The account does not exist!");
             }
 
-            _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
-
+            await _accountRepository.Delete(account);
             return account;
-        }
-
-        private bool AccountExists(long accountNumber)
-        {
-            return _context.Accounts.Any(e => e.AccountNumber == accountNumber);
         }
     }
 }
