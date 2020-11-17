@@ -1,7 +1,7 @@
-﻿using BankServiceBackend.Entities;
+﻿using BankServiceBackend.Persistance.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Database
+namespace BankServiceBackend.Persistance
 {
     public class PostgresDbContext : DbContext
     {

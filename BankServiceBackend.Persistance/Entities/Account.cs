@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BankServiceBackend.Entities
+namespace BankServiceBackend.Persistance.Entities
 {
     public class Account
     {
@@ -19,6 +20,8 @@ namespace BankServiceBackend.Entities
         public double Dispo { get; set; }
 
         public double Credit { get; set; }
+
+        public List<User> Users { get; set; } = new List<User>();
 
         public override string ToString()
         {

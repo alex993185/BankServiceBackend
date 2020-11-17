@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BankServiceBackend.Database;
-using BankServiceBackend.Entities;
+using BankServiceBackend.Persistance;
+using BankServiceBackend.Persistance.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankServiceBackend.Controllers

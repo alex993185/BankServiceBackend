@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\BankServiceBackend.BusinessLogic\BankServiceBackend.BusinessLogic.csproj" />
+    <ProjectReference Include="..\BankServiceBackend.Persistance\BankServiceBackend.Persistance.csproj" />
   </ItemGroup>
 
 

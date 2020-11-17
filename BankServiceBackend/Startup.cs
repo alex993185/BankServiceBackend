@@ -1,4 +1,6 @@
-using BankServiceBackend.Database;
+using BankServiceBackend.Persistance;
+using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Persistance.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +23,9 @@ namespace BankServiceBackend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Postgres")));
+            services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Postgres"), options => options.MigrationsAssembly("BankServiceBackend")));
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddSwaggerGen();
         }
 

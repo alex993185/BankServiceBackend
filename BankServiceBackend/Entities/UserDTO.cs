@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BankServiceBackend.Entities
 {
-    public class User
+    public class UserDTO
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long CustomerNumber { get; set; }
 
         [Required]
@@ -22,7 +18,5 @@ namespace BankServiceBackend.Entities
 
         [Required]
         public string Gender { get; set; }
-
-        public IEnumerable<Account> Accounts { get; set; }
     }
 }

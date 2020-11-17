@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankServiceBackend.Database;
-using BankServiceBackend.Entities;
+using BankServiceBackend.Persistance.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Repositories
+namespace BankServiceBackend.Persistance.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
@@ -22,12 +21,12 @@ namespace BankServiceBackend.Repositories
             return await _context.Accounts.ToListAsync();
         }
 
-        public async Task<Account> Get(long accountNumber)
+        public async Task<Account> GetAsync(long accountNumber)
         {
             return await _context.Accounts.FindAsync(accountNumber);
         }
 
-        public async Task<bool> Update(long accountNumber, Account account)
+        public async Task<bool> UpdateAsync(long accountNumber, Account account)
         {
             _context.Entry(account).State = EntityState.Modified;
 
@@ -55,13 +54,13 @@ namespace BankServiceBackend.Repositories
             return _context.Accounts.Any(e => e.AccountNumber == accountNumber);
         }
 
-        public async Task Save(Account account)
+        public async Task SaveAsync(Account account)
         {
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Account account)
+        public async Task DeleteAsync(Account account)
         {
             _context.Accounts.Remove(account);
             await _context.SaveChangesAsync();

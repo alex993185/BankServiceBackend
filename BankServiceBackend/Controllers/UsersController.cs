@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using BankServiceBackend.Database;
 using BankServiceBackend.Entities;
+using Microsoft.AspNetCore.Mvc;
+using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Persistance.Repositories;
 
 namespace BankServiceBackend.Controllers
 {
@@ -13,89 +13,83 @@ namespace BankServiceBackend.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly PostgresDbContext _context;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(PostgresDbContext context)
+        public UsersController(IUserRepository userRepository)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetAll()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userRepository.GetAllAsync();
+            return new ActionResult<IEnumerable<UserDTO>>(users.Select(GetTransferObject));
         }
 
         // GET: api/Users/1
         [HttpGet("{customerNumber}")]
-        public async Task<ActionResult<User>> Get(long customerNumber)
+        public async Task<ActionResult<UserDTO>> Get(long customerNumber)
         {
-            var user = await _context.Users.FindAsync(customerNumber);
+            var user = await _userRepository.GetAsync(customerNumber);
             if (user == null)
             {
-                return NotFound("The user does not exist!");
+                return NotFound($"The customer number {customerNumber} does not exist!");
             }
 
-            return user;
+            return GetTransferObject(user);
         }
 
         // PUT: api/Users/1
         [HttpPut("{customerNumber}")]
-        public async Task<IActionResult> Update(long customerNumber, User user)
+        public async Task<IActionResult> Update(long customerNumber, UserDTO user)
         {
-            if (customerNumber != user.CustomerNumber)
-            {
-                return BadRequest();
-            }
-
-            if (!UserExists(user.CustomerNumber))
+            if (_userRepository.GetAsync(user.CustomerNumber) == null)
             {
                 return NotFound("The user does not exist. Updating failed!");
             }
 
-            _context.Entry(user).State = EntityState.Modified;
             try
             {
-                await _context.SaveChangesAsync();
+                var userEntity = await _userRepository.UpdateAsync(customerNumber, GetEntity(user));
+                return CreatedAtAction("Get", new { customerNumber = userEntity.CustomerNumber }, GetTransferObject(userEntity));
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception)
             {
                 return Conflict("Updating user failed!");
             }
-
-            return CreatedAtAction("Get", new { customerNumber = user.CustomerNumber }, user);
         }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> Create(User user)
+        public async Task<ActionResult<User>> Create(UserDTO user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("Get", new { customerNumber = user.CustomerNumber }, user);
+            var userEntity = await _userRepository.SaveAsync(GetEntity(user));
+            return CreatedAtAction("Get", new { customerNumber = userEntity.CustomerNumber }, GetTransferObject(userEntity));
         }
 
         // DELETE: api/Users/1
         [HttpDelete("{customerNumber}")]
-        public async Task<ActionResult<User>> Delete(long customerNumber)
+        public async Task<ActionResult<UserDTO>> Delete(long customerNumber)
         {
-            var user = await _context.Users.FindAsync(customerNumber);
+            var user = await _userRepository.RemoveAsync(customerNumber);
             if (user == null)
             {
-                return NotFound("The user does not exist. Deleting failed!");
+                return BadRequest($"Customer number {customerNumber} does not exist!");
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return user;
+            return GetTransferObject(user);
         }
 
-        private bool UserExists(long customerNumber)
+        private UserDTO GetTransferObject(User user)
         {
-            return _context.Users.Any(e => e.CustomerNumber == customerNumber);
+            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender };
+        }
+        
+        private User GetEntity(UserDTO user)
+        {
+            return new User { Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender };
         }
     }
 }

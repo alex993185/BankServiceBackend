@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Persistance.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using BankServiceBackend.Entities;
-using BankServiceBackend.Repositories;
 
 namespace BankServiceBackend.Controllers
 {
@@ -20,16 +20,16 @@ namespace BankServiceBackend.Controllers
 
         // GET: api/Accounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAll()
+        public async Task<ActionResult<IEnumerable<Account>>> GetAllAsync()
         {
             return new ActionResult<IEnumerable<Account>>(await _accountRepository.GetAllAsync());
         }
 
         // GET: api/Accounts/1
         [HttpGet("{accountNumber}")]
-        public async Task<ActionResult<Account>> Get(long accountNumber)
+        public async Task<ActionResult<Account>> GetAsync(long accountNumber)
         {
-            var account = await _accountRepository.Get(accountNumber);
+            var account = await _accountRepository.GetAsync(accountNumber);
             if (account == null)
             {
                 return NotFound("The account does not exist!");
@@ -42,14 +42,14 @@ namespace BankServiceBackend.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{accountNumber}")]
-        public async Task<IActionResult> Update(long accountNumber, Account account)
+        public async Task<IActionResult> UpdateAsync(long accountNumber, Account account)
         {
             if (accountNumber != account.AccountNumber)
             {
                 return BadRequest();
             }
 
-            var updateSuccessful = await _accountRepository.Update(accountNumber, account);
+            var updateSuccessful = await _accountRepository.UpdateAsync(accountNumber, account);
             if (!updateSuccessful)
             {
                 return NotFound("The account does not exist!");
@@ -62,23 +62,23 @@ namespace BankServiceBackend.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Account>> Save(Account account)
+        public async Task<ActionResult<Account>> SaveAsync(Account account)
         {
-            await _accountRepository.Save(account);
-            return CreatedAtAction("Get", new { accountNumber = account.AccountNumber }, account);
+            await _accountRepository.SaveAsync(account);
+            return CreatedAtAction("GetAsync", new { accountNumber = account.AccountNumber }, account);
         }
 
         // DELETE: api/Accounts/1
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Account>> Delete(long accountNumber)
+        [HttpDelete("{accountNumber}")]
+        public async Task<ActionResult<Account>> DeleteAsync(long accountNumber)
         {
-            var account = await _accountRepository.Get(accountNumber);
+            var account = await _accountRepository.GetAsync(accountNumber);
             if (account == null)
             {
                 return NotFound("The account does not exist!");
             }
 
-            await _accountRepository.Delete(account);
+            await _accountRepository.DeleteAsync(account);
             return account;
         }
     }
