@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using BankServiceBackend.Persistance.Entities;
 
 namespace BankServiceBackend.Entities
 {
@@ -17,6 +18,6 @@ namespace BankServiceBackend.Entities
         public DateTime Birthday { get; set; }
 
         [Required]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
     }
 }

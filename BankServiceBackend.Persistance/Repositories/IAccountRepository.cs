@@ -8,8 +8,8 @@ namespace BankServiceBackend.Persistance.Repositories
     {
         Task<IEnumerable<Account>> GetAllAsync();
         Task<Account> GetAsync(long accountNumber);
-        Task<bool> UpdateAsync(long accountNumber, Account account);
-        Task SaveAsync(Account account);
-        Task DeleteAsync(Account account);
+        Task<Account> UpdateAsync(long accountNumber, Account account);
+        Task<Account> SaveAsync(Account account);
+        Task<Account> DeleteAsync(long accountNumber);
     }
 }

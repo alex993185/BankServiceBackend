@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using BankServiceBackend.Entities;
 using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,66 +23,89 @@ namespace BankServiceBackend.Controllers
 
         // GET: api/Accounts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Account>>> GetAllAsync()
+        public async Task<ActionResult<IEnumerable<AccountDTO>>> GetAllAsync()
         {
-            return new ActionResult<IEnumerable<Account>>(await _accountRepository.GetAllAsync());
+            try
+            {
+                var accounts = await _accountRepository.GetAllAsync();
+                return new ActionResult<IEnumerable<AccountDTO>>(accounts.Select(GetTransferObject));
+            }
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET: api/Accounts/1
         [HttpGet("{accountNumber}")]
-        public async Task<ActionResult<Account>> GetAsync(long accountNumber)
+        public async Task<ActionResult<AccountDTO>> GetAsync(long accountNumber)
         {
-            var account = await _accountRepository.GetAsync(accountNumber);
-            if (account == null)
+            try
             {
-                return NotFound("The account does not exist!");
+                var account = await _accountRepository.GetAsync(accountNumber);
+                return GetTransferObject(account);
             }
-
-            return account;
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT: api/Accounts/1
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{accountNumber}")]
-        public async Task<IActionResult> UpdateAsync(long accountNumber, Account account)
+        public async Task<ActionResult<AccountDTO>> UpdateAsync(long accountNumber, AccountDTO account)
         {
-            if (accountNumber != account.AccountNumber)
+            try
             {
-                return BadRequest();
+                var accountEntity = await _accountRepository.UpdateAsync(accountNumber, GetEntity(account));
+                return GetTransferObject(accountEntity);
             }
-
-            var updateSuccessful = await _accountRepository.UpdateAsync(accountNumber, account);
-            if (!updateSuccessful)
+            catch (PersistenceException e)
             {
-                return NotFound("The account does not exist!");
+                return BadRequest(e.Message);
             }
-
-            return NoContent();
         }
 
         // POST: api/Accounts
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Account>> SaveAsync(Account account)
+        public async Task<ActionResult<AccountDTO>> SaveAsync(AccountDTO account)
         {
-            await _accountRepository.SaveAsync(account);
-            return CreatedAtAction("GetAsync", new { accountNumber = account.AccountNumber }, account);
+            try
+            {
+                var accountEntity = await _accountRepository.SaveAsync(GetEntity(account));
+                return GetTransferObject(accountEntity);
+            }
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // DELETE: api/Accounts/1
         [HttpDelete("{accountNumber}")]
-        public async Task<ActionResult<Account>> DeleteAsync(long accountNumber)
+        public async Task<ActionResult<AccountDTO>> DeleteAsync(long accountNumber)
         {
-            var account = await _accountRepository.GetAsync(accountNumber);
-            if (account == null)
+            try
             {
-                return NotFound("The account does not exist!");
+                var account = await _accountRepository.GetAsync(accountNumber);
+                await _accountRepository.DeleteAsync(accountNumber);
+                return GetTransferObject(account);
             }
-
-            await _accountRepository.DeleteAsync(account);
-            return account;
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
+
+        private AccountDTO GetTransferObject(Account account)
+        {
+            return new AccountDTO { AccountNumber = account.AccountNumber, Name = account.Name, Credit = account.Credit, Dispo = account.Dispo };
+        }
+
+        private Account GetEntity(AccountDTO account)
+        {
+            return new Account { AccountNumber = account.AccountNumber, Name = account.Name, Credit = account.Credit, Dispo = account.Dispo };
+        }
+
     }
 }

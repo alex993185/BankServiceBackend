@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BankServiceBackend.Migrations
 {
     [DbContext(typeof(PostgresDbContext))]
-    [Migration("20201117171648_initialCreate")]
+    [Migration("20201117210617_initialCreate")]
     partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,11 +50,9 @@ namespace BankServiceBackend.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("HashedPin")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("AccountNumber");
@@ -129,8 +127,8 @@ namespace BankServiceBackend.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

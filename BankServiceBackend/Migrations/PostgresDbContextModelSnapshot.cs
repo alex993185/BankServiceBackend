@@ -48,11 +48,9 @@ namespace BankServiceBackend.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("HashedPin")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("AccountNumber");
@@ -127,8 +125,8 @@ namespace BankServiceBackend.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
+                    b.Property<int>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");

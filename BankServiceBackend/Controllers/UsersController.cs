@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BankServiceBackend.Entities;
 using Microsoft.AspNetCore.Mvc;
 using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
 
 namespace BankServiceBackend.Controllers
@@ -22,64 +23,77 @@ namespace BankServiceBackend.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAll()
+        public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllAsync()
         {
-            var users = await _userRepository.GetAllAsync();
-            return new ActionResult<IEnumerable<UserDTO>>(users.Select(GetTransferObject));
+            try
+            {
+                var users = await _userRepository.GetAllAsync();
+                return new ActionResult<IEnumerable<UserDTO>>(users.Select(GetTransferObject));
+            }
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // GET: api/Users/1
         [HttpGet("{customerNumber}")]
-        public async Task<ActionResult<UserDTO>> Get(long customerNumber)
+        public async Task<ActionResult<UserDTO>> GetAsync(long customerNumber)
         {
-            var user = await _userRepository.GetAsync(customerNumber);
-            if (user == null)
+            try
             {
-                return NotFound($"The customer number {customerNumber} does not exist!");
+                var user = await _userRepository.GetAsync(customerNumber);
+                return GetTransferObject(user);
             }
-
-            return GetTransferObject(user);
+            catch (PersistenceException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // PUT: api/Users/1
         [HttpPut("{customerNumber}")]
-        public async Task<IActionResult> Update(long customerNumber, UserDTO user)
+        public async Task<ActionResult<UserDTO>> UpdateAsync(long customerNumber, UserDTO user)
         {
-            if (_userRepository.GetAsync(user.CustomerNumber) == null)
-            {
-                return NotFound("The user does not exist. Updating failed!");
-            }
-
             try
             {
                 var userEntity = await _userRepository.UpdateAsync(customerNumber, GetEntity(user));
-                return CreatedAtAction("Get", new { customerNumber = userEntity.CustomerNumber }, GetTransferObject(userEntity));
+                return GetTransferObject(userEntity);
             }
-            catch (Exception)
+            catch (PersistenceException e)
             {
-                return Conflict("Updating user failed!");
+                return BadRequest(e);
             }
         }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<User>> Create(UserDTO user)
+        public async Task<ActionResult<UserDTO>> CreateAsync(UserDTO user)
         {
-            var userEntity = await _userRepository.SaveAsync(GetEntity(user));
-            return CreatedAtAction("Get", new { customerNumber = userEntity.CustomerNumber }, GetTransferObject(userEntity));
+            try
+            {
+                var userEntity = await _userRepository.SaveAsync(GetEntity(user));
+                return GetTransferObject(userEntity);
+            }
+            catch (PersistenceException e)
+            {
+                return BadRequest(e);
+            }
         }
 
         // DELETE: api/Users/1
         [HttpDelete("{customerNumber}")]
-        public async Task<ActionResult<UserDTO>> Delete(long customerNumber)
+        public async Task<ActionResult<UserDTO>> DeleteAsync(long customerNumber)
         {
-            var user = await _userRepository.RemoveAsync(customerNumber);
-            if (user == null)
+            try
             {
-                return BadRequest($"Customer number {customerNumber} does not exist!");
+                var user = await _userRepository.RemoveAsync(customerNumber);
+                return GetTransferObject(user);
             }
-
-            return GetTransferObject(user);
+            catch (PersistenceException e)
+            {
+                return BadRequest(e);
+            }
         }
 
         private UserDTO GetTransferObject(User user)

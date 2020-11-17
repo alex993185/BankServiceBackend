@@ -14,8 +14,8 @@ namespace BankServiceBackend.Migrations
                 {
                     AccountNumber = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    HashedPin = table.Column<string>(type: "text", nullable: false),
-                    Name = table.Column<string>(type: "text", nullable: false),
+                    HashedPin = table.Column<string>(type: "text", nullable: true),
+                    Name = table.Column<string>(type: "text", nullable: true),
                     Dispo = table.Column<double>(type: "double precision", nullable: false),
                     Credit = table.Column<double>(type: "double precision", nullable: false)
                 },
@@ -33,7 +33,7 @@ namespace BankServiceBackend.Migrations
                     Name = table.Column<string>(type: "text", nullable: true),
                     FirstName = table.Column<string>(type: "text", nullable: true),
                     Birthday = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Gender = table.Column<string>(type: "text", nullable: true)
+                    Gender = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
