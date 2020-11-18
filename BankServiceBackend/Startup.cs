@@ -12,6 +12,8 @@ namespace BankServiceBackend
 {
     public class Startup
     {
+        private bool IN_MEMORY_DB = true;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,7 +25,19 @@ namespace BankServiceBackend
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Postgres"), options => options.MigrationsAssembly("BankServiceBackend")));
+
+            // Database
+            if (IN_MEMORY_DB)
+            {
+                services.AddDbContext<InMemoryDbContext>(options => options.UseInMemoryDatabase(databaseName: "BankService"));
+                services.AddTransient<BankServiceDbContext, InMemoryDbContext>();
+            }
+            else
+            {
+                services.AddDbContext<PostgresDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Postgres"), options => options.MigrationsAssembly("BankServiceBackend")));
+                services.AddTransient<BankServiceDbContext, PostgresDbContext>();
+            }
+
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<ITransactionHandler, TransactionHandler>();
@@ -41,7 +55,7 @@ namespace BankServiceBackend
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

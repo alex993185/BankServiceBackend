@@ -9,9 +9,9 @@ namespace BankServiceBackend.Persistance.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
-        private readonly PostgresDbContext _context;
+        private readonly BankServiceDbContext _context;
 
-        public AccountRepository(PostgresDbContext context)
+        public AccountRepository(BankServiceDbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
