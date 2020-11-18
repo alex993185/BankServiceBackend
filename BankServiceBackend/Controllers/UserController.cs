@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BankServiceBackend.Entities;
+using BankServiceBackend.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using BankServiceBackend.Persistance.Entities;
 using BankServiceBackend.Persistance.Exceptions;
@@ -28,7 +29,7 @@ namespace BankServiceBackend.Controllers
             try
             {
                 var users = await _userRepository.GetAllAsync();
-                return new ActionResult<IEnumerable<UserDTO>>(users.Select(GetTransferObject));
+                return new ActionResult<IEnumerable<UserDTO>>(users.Select(u => u.GetTransferObject()));
             }
             catch (UserFriendlyException e)
             {
@@ -43,7 +44,7 @@ namespace BankServiceBackend.Controllers
             try
             {
                 var user = await _userRepository.GetAsync(customerNumber);
-                return GetTransferObject(user);
+                return user.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
@@ -57,8 +58,8 @@ namespace BankServiceBackend.Controllers
         {
             try
             {
-                var userEntity = await _userRepository.UpdateAsync(customerNumber, GetEntity(user));
-                return GetTransferObject(userEntity);
+                var userEntity = await _userRepository.UpdateAsync(customerNumber, user.GetEntity());
+                return userEntity.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
@@ -72,8 +73,8 @@ namespace BankServiceBackend.Controllers
         {
             try
             {
-                var userEntity = await _userRepository.SaveAsync(GetEntity(user));
-                return GetTransferObject(userEntity);
+                var userEntity = await _userRepository.SaveAsync(user.GetEntity());
+                return userEntity.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
@@ -88,26 +89,12 @@ namespace BankServiceBackend.Controllers
             try
             {
                 var user = await _userRepository.RemoveAsync(customerNumber);
-                return GetTransferObject(user);
+                return user.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
                 return BadRequest(e.ReadableMessage);
             }
-        }
-
-        private UserDTO GetTransferObject(User user)
-        {
-            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender.ToString() };
-        }
-        
-        private User GetEntity(UserDTO user)
-        {
-            if (!Enum.TryParse(user.Gender, out Gender gender))
-            {
-                throw new UserFriendlyException("Gender is not recognized! (Possible: Male, Female, Diverse)");
-            }
-            return new User { Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = gender };
         }
     }
 }

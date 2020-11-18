@@ -44,7 +44,6 @@ namespace BankServiceBackend.Persistance.Repositories
         {
             try
             {
-                //await _context.Database.BeginTransactionAsync(); Not allowed for in memory db
                 var persistedAccount = await GetAsync(accountNumber);
                 if (persistedAccount.HashedPin != hashedPin)
                 {
@@ -55,7 +54,6 @@ namespace BankServiceBackend.Persistance.Repositories
                 persistedAccount.Name = account.Name;
                 _context.Update(persistedAccount);
                 await _context.SaveChangesAsync();
-                //await _context.Database.CommitTransactionAsync();
                 return account;
             }
             catch (PersistingFailedException e)
@@ -105,7 +103,6 @@ namespace BankServiceBackend.Persistance.Repositories
                 var account = await GetAsync(accountNumber);
                 if (account != null)
                 {
-                    //await _context.Database.BeginTransactionAsync();
                     if (account.HashedPin != hashedPin)
                     {
                         throw new RemovingFailedException("Wrong PIN!");
@@ -124,7 +121,6 @@ namespace BankServiceBackend.Persistance.Repositories
                     _context.Accounts.Remove(account);
 
                     await _context.SaveChangesAsync();
-                    //await _context.Database.CommitTransactionAsync();
                 }
 
                 return account;

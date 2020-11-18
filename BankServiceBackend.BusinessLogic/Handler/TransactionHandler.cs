@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BankServiceBackend.BusinessLogic.Exceptions;
 using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
 

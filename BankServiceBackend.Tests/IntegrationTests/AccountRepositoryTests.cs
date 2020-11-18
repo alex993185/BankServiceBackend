@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BankServiceBackend.Persistance;
 using BankServiceBackend.Persistance.Entities;
 using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
@@ -9,10 +9,23 @@ using KellermanSoftware.CompareNetObjects;
 using NUnit.Framework;
 
 namespace BankServiceBackend.Tests.IntegrationTests
-{
+{ /**
+     * <summary>
+     * This test class runs account repository tests against a real Postgres.
+     * </summary>
+     */
     [TestFixture]
-    public class AccountRepositoryTests : PersistanceTests
+    public class AccountRepositoryTests
     {
+        private BankServiceDbContext _dbContext;
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            _dbContext = new PostgresDbContextFactory().CreateDbContext();
+        }
+
+
         [Test]
         public void Ctor_ArgumentNull_ExceptionIsThrown()
         {

@@ -5,6 +5,8 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BankServiceBackend.Persistance;
+using BankServiceBackend.Persistance.Enums;
 using BankServiceBackend.Persistance.Exceptions;
 using KellermanSoftware.CompareNetObjects;
 
@@ -16,8 +18,16 @@ namespace BankServiceBackend.Tests.IntegrationTests
      * </summary>
      */
     [TestFixture]
-    public class UserRepositoryTests : PersistanceTests
+    public class UserRepositoryTests
     {
+        private BankServiceDbContext _dbContext;
+
+        [OneTimeSetUp]
+        public void SetUp()
+        {
+            _dbContext = new PostgresDbContextFactory().CreateDbContext();
+        }
+
        [Test]
         public void Ctor_ArgumentNull_ThrowsException()
         {

@@ -12,7 +12,7 @@ namespace BankServiceBackend
 {
     public class Startup
     {
-        private bool IN_MEMORY_DB = true;
+        private const bool UseInMemoryDb = true; // In memory or Postgres DB
 
         public Startup(IConfiguration configuration)
         {
@@ -26,8 +26,7 @@ namespace BankServiceBackend
         {
             services.AddControllers();
 
-            // Database
-            if (IN_MEMORY_DB)
+            if (UseInMemoryDb)
             {
                 services.AddDbContext<InMemoryDbContext>(options => options.UseInMemoryDatabase(databaseName: "BankService"));
                 services.AddTransient<BankServiceDbContext, InMemoryDbContext>();
@@ -55,6 +54,7 @@ namespace BankServiceBackend
                 app.UseDeveloperExceptionPage();
             }
 
+            // Enable HTTPs
             //app.UseHttpsRedirection();
 
             app.UseRouting();

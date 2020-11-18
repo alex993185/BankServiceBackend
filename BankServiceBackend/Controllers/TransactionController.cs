@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BankServiceBackend.BusinessLogic;
+using BankServiceBackend.BusinessLogic.Exceptions;
 using BankServiceBackend.BusinessLogic.Handler;
+using BankServiceBackend.Persistance.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankServiceBackend.Controllers
@@ -25,9 +28,9 @@ namespace BankServiceBackend.Controllers
                 await _transactionHandler.DepositAsync(accountNumber, amountInEuro, hashedPin);
                 return Ok();
             }
-            catch (Exception)
+            catch (DepositFailedException e)
             {
-                return BadRequest("Deposit failed!");
+                return BadRequest(e.ReadableMessage);
             }
         }
 
@@ -41,13 +44,13 @@ namespace BankServiceBackend.Controllers
                 {
                     return Ok();
                 }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
 
-            return BadRequest("Withdrawal failed!");
+                return BadRequest();
+            }
+            catch (WithdrawFailedException e)
+            {
+                return BadRequest(e.ReadableMessage);
+            }
         }
     }
 }

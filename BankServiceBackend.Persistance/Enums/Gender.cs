@@ -1,4 +1,4 @@
-﻿namespace BankServiceBackend.Persistance.Entities
+﻿namespace BankServiceBackend.Persistance.Enums
 {
     public enum Gender
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BankServiceBackend.Entities;
-using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.Extensions;
 using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +28,7 @@ namespace BankServiceBackend.Controllers
             try
             {
                 var accounts = await _accountRepository.GetAllAsync();
-                return new ActionResult<IEnumerable<AccountDTO>>(accounts.Select(GetTransferObject));
+                return new ActionResult<IEnumerable<AccountDTO>>(accounts.Select(a => a.GetTransferObject()));
             }
             catch (UserFriendlyException e)
             {
@@ -43,22 +43,22 @@ namespace BankServiceBackend.Controllers
             try
             {
                 var account = await _accountRepository.GetAsync(accountNumber);
-                return GetTransferObject(account);
+                return account.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
                 return BadRequest(e.ReadableMessage);
             }
         }
-
+  
         // PUT: api/Accounts/1
         [HttpPut]
         public async Task<ActionResult<AccountDTO>> UpdateAsync([FromQuery] long accountNumber, [FromQuery] string hashedPin, AccountDTO account)
         {
             try
             {
-                var accountEntity = await _accountRepository.UpdateAsync(accountNumber, hashedPin, GetEntity(account));
-                return GetTransferObject(accountEntity);
+                var accountEntity = await _accountRepository.UpdateAsync(accountNumber, hashedPin, account.GetEntity());
+                return accountEntity.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
@@ -72,8 +72,8 @@ namespace BankServiceBackend.Controllers
         {
             try
             {
-                var accountEntity = await _accountRepository.SaveAsync(hashedPin, GetEntity(account));
-                return GetTransferObject(accountEntity);
+                var accountEntity = await _accountRepository.SaveAsync(hashedPin, account.GetEntity());
+                return accountEntity.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
@@ -89,23 +89,12 @@ namespace BankServiceBackend.Controllers
             {
                 var account = await _accountRepository.GetAsync(accountNumber);
                 await _accountRepository.DeleteAsync(accountNumber, hashedPin);
-                return GetTransferObject(account);
+                return account.GetTransferObject();
             }
             catch (UserFriendlyException e)
             {
                 return BadRequest(e.ReadableMessage);
             }
         }
-
-        private AccountDTO GetTransferObject(Account account)
-        {
-            return new AccountDTO { AccountNumber = account.AccountNumber, Name = account.Name, Credit = account.Credit, Dispo = account.Dispo };
-        }
-
-        private Account GetEntity(AccountDTO account)
-        {
-            return new Account { AccountNumber = account.AccountNumber, Name = account.Name, Credit = account.Credit, Dispo = account.Dispo };
-        }
-
     }
 }
