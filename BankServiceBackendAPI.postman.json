@@ -1,0 +1,480 @@
+{
+	"info": {
+		"_postman_id": "e685c519-cd8e-4c1c-a0c8-712269a4894e",
+		"name": "BankServiceBackend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"TestAccount\",\r\n  \"dispo\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/?hashedPin=Hash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								""
+							],
+							"query": [
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"TestAccount\",\r\n  \"dispo\": 100\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/?hashedPin=Hash&accountNumber=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								""
+							],
+							"query": [
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								},
+								{
+									"key": "accountNumber",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/?hashedPin=Hash&accountNumber=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								""
+							],
+							"query": [
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								},
+								{
+									"key": "accountNumber",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/accounts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"TestUser\",\r\n  \"firstName\": \"FirstName\",\r\n  \"birthday\": \"2000-11-18T17:12:31.244Z\",\r\n  \"gender\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"TestUserNameChanged\",\r\n  \"firstName\": \"FirstName\",\r\n  \"birthday\": \"2000-11-18T17:12:31.244Z\",\r\n  \"gender\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "text"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authentication",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Deposit",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Transaction/deposit?accountNumber=4&amountInEuro=100&hashedPin=Hash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Transaction",
+								"deposit"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "4"
+								},
+								{
+									"key": "amountInEuro",
+									"value": "100"
+								},
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Withdrawal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/Transaction/withdraw?accountNumber=1&amountInEuro=100&hashedPin=Hash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"Transaction",
+								"withdraw"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "1"
+								},
+								{
+									"key": "amountInEuro",
+									"value": "100"
+								},
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
