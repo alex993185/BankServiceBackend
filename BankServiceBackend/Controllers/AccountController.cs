@@ -52,12 +52,12 @@ namespace BankServiceBackend.Controllers
         }
 
         // PUT: api/Accounts/1
-        [HttpPut("{accountNumber}")]
-        public async Task<ActionResult<AccountDTO>> UpdateAsync(long accountNumber, AccountDTO account)
+        [HttpPut]
+        public async Task<ActionResult<AccountDTO>> UpdateAsync([FromQuery] long accountNumber, [FromQuery] string hashedPin, AccountDTO account)
         {
             try
             {
-                var accountEntity = await _accountRepository.UpdateAsync(accountNumber, GetEntity(account));
+                var accountEntity = await _accountRepository.UpdateAsync(accountNumber, hashedPin, GetEntity(account));
                 return GetTransferObject(accountEntity);
             }
             catch (PersistenceException e)
@@ -68,11 +68,11 @@ namespace BankServiceBackend.Controllers
 
         // POST: api/Accounts
         [HttpPost]
-        public async Task<ActionResult<AccountDTO>> SaveAsync(AccountDTO account)
+        public async Task<ActionResult<AccountDTO>> SaveAsync([FromQuery] string hashedPin, AccountDTO account)
         {
             try
             {
-                var accountEntity = await _accountRepository.SaveAsync(GetEntity(account));
+                var accountEntity = await _accountRepository.SaveAsync(hashedPin, GetEntity(account));
                 return GetTransferObject(accountEntity);
             }
             catch (PersistenceException e)
@@ -82,13 +82,13 @@ namespace BankServiceBackend.Controllers
         }
 
         // DELETE: api/Accounts/1
-        [HttpDelete("{accountNumber}")]
-        public async Task<ActionResult<AccountDTO>> DeleteAsync(long accountNumber)
+        [HttpDelete]
+        public async Task<ActionResult<AccountDTO>> DeleteAsync([FromQuery] long accountNumber, [FromQuery] string hashedPin)
         {
             try
             {
                 var account = await _accountRepository.GetAsync(accountNumber);
-                await _accountRepository.DeleteAsync(accountNumber);
+                await _accountRepository.DeleteAsync(accountNumber, hashedPin);
                 return GetTransferObject(account);
             }
             catch (PersistenceException e)

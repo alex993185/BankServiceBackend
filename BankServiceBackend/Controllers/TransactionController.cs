@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BankServiceBackend.Persistance;
-using BankServiceBackend.Persistance.Entities;
+using BankServiceBackend.BusinessLogic.Handler;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankServiceBackend.Controllers
@@ -10,57 +9,39 @@ namespace BankServiceBackend.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly PostgresDbContext _context;
+        private readonly ITransactionHandler _transactionHandler;
 
-        public TransactionController(PostgresDbContext context)
+        public TransactionController(ITransactionHandler transactionHandler)
         {
-            _context = context ?? throw new ArgumentNullException(nameof(context));
+            _transactionHandler = transactionHandler ?? throw new ArgumentNullException(nameof(transactionHandler));
         }
 
-        // POST: api/Transaction
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
+        [HttpGet]
         [Route("deposit")]
-        public async Task<ActionResult> Deposit(Account account, double amountInEuro)
+        public async Task<ActionResult> Deposit([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
         {
-            var persistedAccount = await _context.Accounts.FindAsync(account.AccountNumber);
-            if (persistedAccount == null)
+            if (await _transactionHandler.Deposit(accountNumber, amountInEuro, hashedPin))
             {
-                return NotFound("The account does not exist!");
+                return Ok();
             }
-
-            if (persistedAccount.HashedPin != account.HashedPin)
+            else
             {
-                return BadRequest("Wrong PIN!");
+                return BadRequest("Deposit failed!");
             }
-
-            persistedAccount.Credit -= amountInEuro;
-            return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("withdraw")]
-        public async Task<ActionResult> Withdraw(Account account, double amountInEuro)
+        public async Task<ActionResult> Withdraw([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
         {
-            var persistedAccount = await _context.Accounts.FindAsync(account.AccountNumber);
-            if (persistedAccount == null)
+            if (await _transactionHandler.Withdraw(accountNumber, amountInEuro, hashedPin))
             {
-                return NotFound("The account does not exist!");
+                return Ok();
             }
-
-            if (persistedAccount.HashedPin != account.HashedPin)
+            else
             {
-                return BadRequest("Wrong PIN!");
+                return BadRequest("Withdrawal failed!");
             }
-
-            if (persistedAccount.Credit - amountInEuro < persistedAccount.Dispo)
-            {
-                return BadRequest("Dispo limit exceeded. Transaction cancelled!");
-            }
-
-            persistedAccount.Credit -= amountInEuro;
-            return Ok();
         }
     }
 }

@@ -39,16 +39,27 @@ namespace BankServiceBackend.Persistance.Repositories
             return account;
         }
 
-        public async Task<Account> UpdateAsync(long accountNumber, Account account)
+        public async Task<Account> UpdateAsync(long accountNumber, string hashedPin, Account account)
         {
             try
             {
                 await _context.Database.BeginTransactionAsync();
-                account.AccountNumber = accountNumber;
-                _context.Update(account);
+                var persistedAccount = await GetAsync(accountNumber);
+                if (persistedAccount.HashedPin != hashedPin)
+                {
+                    throw new PersistingFailedException("Wrong PIN!");
+                }
+
+                persistedAccount.Dispo = account.Dispo;
+                persistedAccount.Name = account.Name;
+                _context.Update(persistedAccount);
                 await _context.SaveChangesAsync();
                 await _context.Database.CommitTransactionAsync();
                 return account;
+            }
+            catch (PersistingFailedException e)
+            {
+                throw e;
             }
             catch (InvalidOperationException)
             {
@@ -60,23 +71,33 @@ namespace BankServiceBackend.Persistance.Repositories
             }
         }
 
-        public async Task<Account> SaveAsync(Account account)
+        public async Task<Account> SaveAsync(string hashedPin, Account account)
         {
             try
             {
-                account =_context.Accounts.Add(account).Entity;
+                if (string.IsNullOrEmpty(hashedPin))
+                {
+                    throw new PersistingFailedException("There must be a PIN entered!");
+                }
+
+                account.Credit = 0;
+                account.HashedPin = hashedPin;
+                account = _context.Accounts.Add(account).Entity;
                 await _context.SaveChangesAsync();
             }
-            catch (Exception e)
+            catch (PersistingFailedException e)
             {
-                Console.WriteLine(e.InnerException);
+                throw e;
+            }
+            catch (Exception)
+            {
                 throw new PersistingFailedException($"Saving {account} failed!");
             }
 
             return account;
         }
 
-        public async Task<Account> DeleteAsync(long accountNumber)
+        public async Task<Account> DeleteAsync(long accountNumber, string hashedPin)
         {
             try
             {
@@ -84,7 +105,10 @@ namespace BankServiceBackend.Persistance.Repositories
                 if (account != null)
                 {
                     await _context.Database.BeginTransactionAsync();
-
+                    if (account.HashedPin != hashedPin)
+                    {
+                        throw new RemovingFailedException("Wrong PIN!");
+                    }
                     if (Math.Abs(account.Credit) > 0.0001)
                     {
                         throw new RemovingFailedException("Account has credit. Removing is not possible!");
@@ -103,6 +127,10 @@ namespace BankServiceBackend.Persistance.Repositories
                 }
 
                 return account;
+            }
+            catch (RemovingFailedException e)
+            {
+                throw e;
             }
             catch (Exception)
             {
