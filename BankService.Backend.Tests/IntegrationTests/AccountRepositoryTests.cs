@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankServiceBackend.Persistance;
-using BankServiceBackend.Persistance.Entities;
-using BankServiceBackend.Persistance.Exceptions;
-using BankServiceBackend.Persistance.Repositories;
+using BankService.Backend.Persistance;
+using BankService.Backend.Persistance.Entities;
+using BankService.Backend.Persistance.Exceptions;
+using BankService.Backend.Persistance.Repositories;
 using KellermanSoftware.CompareNetObjects;
 using NUnit.Framework;
 
-namespace BankServiceBackend.Tests.IntegrationTests
+namespace BankService.Backend.Tests.IntegrationTests
 { /**
      * <summary>
      * This test class runs account repository tests against a real Postgres.

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace BankServiceBackend.BusinessLogic.Handler
+namespace BankService.Backend.BusinessLogic.Handler
 {
     public interface ITransactionHandler
     {

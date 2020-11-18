@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BankServiceBackend.Entities
+namespace BankService.Backend.API.Entities
 {
     public class AccountDTO
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BankServiceBackend.Persistance.Entities;
+using BankService.Backend.Persistance.Entities;
 
-namespace BankServiceBackend.Persistance.Repositories
+namespace BankService.Backend.Persistance.Repositories
 {
     public interface IUserRepository
     {

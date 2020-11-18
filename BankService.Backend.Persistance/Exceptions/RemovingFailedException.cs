@@ -1,4 +1,4 @@
-﻿namespace BankServiceBackend.Persistance.Exceptions
+﻿namespace BankService.Backend.Persistance.Exceptions
 {
     public class RemovingFailedException : UserFriendlyException
     {

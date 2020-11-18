@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BankServiceBackend.Persistance.Entities;
-using BankServiceBackend.Persistance.Exceptions;
+using BankService.Backend.Persistance.Entities;
+using BankService.Backend.Persistance.Exceptions;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Persistance.Repositories
+namespace BankService.Backend.Persistance.Repositories
 {
     public class AccountRepository : IAccountRepository
     {

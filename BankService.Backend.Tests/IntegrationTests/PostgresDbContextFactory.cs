@@ -1,7 +1,7 @@
-﻿using BankServiceBackend.Persistance;
+﻿using BankService.Backend.Persistance;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Tests.IntegrationTests
+namespace BankService.Backend.Tests.IntegrationTests
 {
     public class PostgresDbContextFactory
     {

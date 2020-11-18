@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BankServiceBackend.Persistance.Exceptions
+namespace BankService.Backend.Persistance.Exceptions
 {
     public class UserFriendlyException : Exception
     {

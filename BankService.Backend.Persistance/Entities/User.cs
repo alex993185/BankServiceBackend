@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using BankServiceBackend.Persistance.Enums;
+using BankService.Backend.Persistance.Enums;
 using Newtonsoft.Json;
 
-namespace BankServiceBackend.Persistance.Entities
+namespace BankService.Backend.Persistance.Entities
 {
     public class User
     {

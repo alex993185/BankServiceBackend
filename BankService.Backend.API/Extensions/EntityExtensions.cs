@@ -1,10 +1,10 @@
 ﻿using System;
-using BankServiceBackend.Entities;
-using BankServiceBackend.Persistance.Entities;
-using BankServiceBackend.Persistance.Enums;
-using BankServiceBackend.Persistance.Exceptions;
+using BankService.Backend.API.Entities;
+using BankService.Backend.Persistance.Entities;
+using BankService.Backend.Persistance.Enums;
+using BankService.Backend.Persistance.Exceptions;
 
-namespace BankServiceBackend.Extensions
+namespace BankService.Backend.API.Extensions
 {
     public static class EntityExtensions
     {

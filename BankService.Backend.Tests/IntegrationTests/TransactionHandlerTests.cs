@@ -1,14 +1,13 @@
 ﻿using System.Threading.Tasks;
-using BankServiceBackend.BusinessLogic;
-using BankServiceBackend.BusinessLogic.Exceptions;
-using BankServiceBackend.BusinessLogic.Handler;
-using BankServiceBackend.Persistance.Entities;
-using BankServiceBackend.Persistance.Exceptions;
-using BankServiceBackend.Persistance.Repositories;
+using BankService.Backend.BusinessLogic.Exceptions;
+using BankService.Backend.BusinessLogic.Handler;
+using BankService.Backend.Persistance.Entities;
+using BankService.Backend.Persistance.Exceptions;
+using BankService.Backend.Persistance.Repositories;
 using Moq;
 using NUnit.Framework;
 
-namespace BankServiceBackend.Tests.IntegrationTests
+namespace BankService.Backend.Tests.IntegrationTests
 {
     [TestFixture]
     public class TransactionHandlerTests

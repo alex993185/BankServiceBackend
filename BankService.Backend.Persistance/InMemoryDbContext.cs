@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Persistance
+namespace BankService.Backend.Persistance
 {
     public class InMemoryDbContext : BankServiceDbContext
     {

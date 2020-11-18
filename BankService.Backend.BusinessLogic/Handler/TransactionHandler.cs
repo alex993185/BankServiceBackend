@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BankServiceBackend.BusinessLogic.Exceptions;
-using BankServiceBackend.Persistance.Exceptions;
-using BankServiceBackend.Persistance.Repositories;
+using BankService.Backend.BusinessLogic.Exceptions;
+using BankService.Backend.Persistance.Repositories;
 
-namespace BankServiceBackend.BusinessLogic.Handler
+namespace BankService.Backend.BusinessLogic.Handler
 {
     public class TransactionHandler : ITransactionHandler
     {

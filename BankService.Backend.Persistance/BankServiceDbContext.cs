@@ -1,7 +1,7 @@
-﻿using BankServiceBackend.Persistance.Entities;
+﻿using BankService.Backend.Persistance.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankServiceBackend.Persistance
+namespace BankService.Backend.Persistance
 {
     public abstract class BankServiceDbContext : DbContext
     {

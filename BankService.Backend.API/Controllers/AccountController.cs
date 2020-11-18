@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankServiceBackend.Entities;
-using BankServiceBackend.Extensions;
-using BankServiceBackend.Persistance.Exceptions;
-using BankServiceBackend.Persistance.Repositories;
+using BankService.Backend.API.Entities;
+using BankService.Backend.API.Extensions;
+using BankService.Backend.Persistance.Exceptions;
+using BankService.Backend.Persistance.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BankServiceBackend.Controllers
+namespace BankService.Backend.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

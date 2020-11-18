@@ -1,16 +1,16 @@
 ﻿using System;
-using BankServiceBackend.Persistance.Entities;
-using BankServiceBackend.Persistance.Repositories;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BankServiceBackend.Persistance;
-using BankServiceBackend.Persistance.Enums;
-using BankServiceBackend.Persistance.Exceptions;
+using BankService.Backend.Persistance;
+using BankService.Backend.Persistance.Entities;
+using BankService.Backend.Persistance.Enums;
+using BankService.Backend.Persistance.Exceptions;
+using BankService.Backend.Persistance.Repositories;
 using KellermanSoftware.CompareNetObjects;
+using NUnit.Framework;
 
-namespace BankServiceBackend.Tests.IntegrationTests
+namespace BankService.Backend.Tests.IntegrationTests
 {
     /**
      * <summary>

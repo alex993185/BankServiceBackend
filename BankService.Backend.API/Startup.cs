@@ -1,6 +1,6 @@
-using BankServiceBackend.BusinessLogic.Handler;
-using BankServiceBackend.Persistance;
-using BankServiceBackend.Persistance.Repositories;
+using BankService.Backend.BusinessLogic.Handler;
+using BankService.Backend.Persistance;
+using BankService.Backend.Persistance.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace BankServiceBackend
+namespace BankService.Backend.API
 {
     public class Startup
     {

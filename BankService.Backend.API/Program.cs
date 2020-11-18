@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace BankServiceBackend
+namespace BankService.Backend.API
 {
     public class Program
     {

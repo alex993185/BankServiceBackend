@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BankServiceBackend.BusinessLogic;
-using BankServiceBackend.BusinessLogic.Exceptions;
-using BankServiceBackend.BusinessLogic.Handler;
-using BankServiceBackend.Persistance.Exceptions;
+using BankService.Backend.BusinessLogic.Exceptions;
+using BankService.Backend.BusinessLogic.Handler;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BankServiceBackend.Controllers
+namespace BankService.Backend.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

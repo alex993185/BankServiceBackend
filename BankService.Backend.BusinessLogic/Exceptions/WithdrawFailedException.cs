@@ -1,6 +1,6 @@
-﻿using BankServiceBackend.Persistance.Exceptions;
+﻿using BankService.Backend.Persistance.Exceptions;
 
-namespace BankServiceBackend.BusinessLogic.Exceptions
+namespace BankService.Backend.BusinessLogic.Exceptions
 {
     public class WithdrawFailedException : UserFriendlyException
     {
