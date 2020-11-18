@@ -31,6 +31,7 @@ namespace BankServiceBackend.Persistance.Repositories
         public async Task<Account> GetAsync(long accountNumber)
         {
             var account = await _context.Accounts.FindAsync(accountNumber);
+            Console.WriteLine(account == null);
             if (account == null)
             {
                 throw new FetchingFailedException($"Account number {account} is unknown!");

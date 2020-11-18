@@ -30,7 +30,7 @@ namespace BankServiceBackend.Controllers
                 var users = await _userRepository.GetAllAsync();
                 return new ActionResult<IEnumerable<UserDTO>>(users.Select(GetTransferObject));
             }
-            catch (PersistenceException e)
+            catch (UserFriendlyException e)
             {
                 return BadRequest(e.Message);
             }
@@ -45,7 +45,7 @@ namespace BankServiceBackend.Controllers
                 var user = await _userRepository.GetAsync(customerNumber);
                 return GetTransferObject(user);
             }
-            catch (PersistenceException e)
+            catch (UserFriendlyException e)
             {
                 return BadRequest(e.Message);
             }
@@ -60,7 +60,7 @@ namespace BankServiceBackend.Controllers
                 var userEntity = await _userRepository.UpdateAsync(customerNumber, GetEntity(user));
                 return GetTransferObject(userEntity);
             }
-            catch (PersistenceException e)
+            catch (UserFriendlyException e)
             {
                 return BadRequest(e);
             }
@@ -75,7 +75,7 @@ namespace BankServiceBackend.Controllers
                 var userEntity = await _userRepository.SaveAsync(GetEntity(user));
                 return GetTransferObject(userEntity);
             }
-            catch (PersistenceException e)
+            catch (UserFriendlyException e)
             {
                 return BadRequest(e);
             }
@@ -90,7 +90,7 @@ namespace BankServiceBackend.Controllers
                 var user = await _userRepository.RemoveAsync(customerNumber);
                 return GetTransferObject(user);
             }
-            catch (PersistenceException e)
+            catch (UserFriendlyException e)
             {
                 return BadRequest(e);
             }

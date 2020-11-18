@@ -24,8 +24,8 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             // Arrange
             var sut = new AccountRepository(_dbContext);
-            var account1 = await sut.SaveAsync(GetDummyAccount());
-            var account2 = await sut.SaveAsync(GetDummyAccount());
+            var account1 = await sut.SaveAsync("Hash1", GetDummyAccount());
+            var account2 = await sut.SaveAsync("Hash2", GetDummyAccount());
 
             // Act
             var accounts = await sut.GetAllAsync();
@@ -50,7 +50,7 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             // Arrange
             var sut = new AccountRepository(_dbContext);
-            var account = await sut.SaveAsync(GetDummyAccount());
+            var account = await sut.SaveAsync("Hash", GetDummyAccount());
 
             // Act
             var rcvdAccount = await sut.GetAsync(account.AccountNumber);
@@ -68,7 +68,7 @@ namespace BankServiceBackend.Tests.IntegrationTests
             var sut = new AccountRepository(_dbContext);
 
             // Act
-            var persistedAccount = await sut.SaveAsync(account);
+            var persistedAccount = await sut.SaveAsync("Hash", account);
 
             // Assert
             Assert.That(persistedAccount.AccountNumber, Is.Not.Null, $"Expected persisted {account} has an account number!");
@@ -82,7 +82,7 @@ namespace BankServiceBackend.Tests.IntegrationTests
             var sut = new AccountRepository(_dbContext);
 
             // Act
-            var persistedAccount = await sut.SaveAsync(account);
+            var persistedAccount = await sut.SaveAsync("Hash", account);
 
             // Assert
             var comparisonResult = new CompareLogic().Compare(account, persistedAccount);
@@ -94,11 +94,11 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             // Arrange
             var sut = new AccountRepository(_dbContext);
-            var account = await sut.SaveAsync(GetDummyAccount());
+            var account = await sut.SaveAsync("Hash", GetDummyAccount());
 
             // Act
             account.Name = "UpdatedAccount";
-            var updatedAccount = await sut.UpdateAsync(account.AccountNumber, account);
+            var updatedAccount = await sut.UpdateAsync(account.AccountNumber, "Hash", account);
 
             // Verify
             var comparisonResult = new CompareLogic().Compare(account, updatedAccount);
@@ -110,7 +110,7 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             var sut = new AccountRepository(_dbContext);
 
-            Assert.ThrowsAsync<PersistingFailedException>(async () => await sut.UpdateAsync(long.MaxValue, new Account()));
+            Assert.ThrowsAsync<PersistingFailedException>(async () => await sut.UpdateAsync(long.MaxValue, "Hash", new Account()));
         }
 
         [Test]
@@ -118,12 +118,12 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             // Arrange
             var sut = new AccountRepository(_dbContext);
-            var account = await sut.SaveAsync(GetDummyAccount());
+            var account = await sut.SaveAsync("Hash", GetDummyAccount());
             var accountNumber = account.AccountNumber;
 
             // Act
             account.AccountNumber = accountNumber + 1;
-            var updatedAccount = await sut.UpdateAsync(accountNumber, account);
+            var updatedAccount = await sut.UpdateAsync(accountNumber, "Hash", account);
 
             // Verify
             Assert.That(updatedAccount.AccountNumber, Is.EqualTo(account.AccountNumber), "Account number must not be changed!");
@@ -134,12 +134,12 @@ namespace BankServiceBackend.Tests.IntegrationTests
         {
             // Arrange
             var sut = new AccountRepository(_dbContext);
-            var account = await sut.SaveAsync(GetDummyAccount());
-            account = await sut.SaveAsync(account);
+            var account = await sut.SaveAsync("Hash", GetDummyAccount());
+            account = await sut.SaveAsync("Hash", account);
 
             // Act & Assert
             var accountNumber = account.AccountNumber + 1;
-            Assert.ThrowsAsync<PersistingFailedException>(async () => await sut.UpdateAsync(accountNumber, account));
+            Assert.ThrowsAsync<PersistingFailedException>(async () => await sut.UpdateAsync(accountNumber, "Hash", account));
         }
 
         private Account GetDummyAccount()

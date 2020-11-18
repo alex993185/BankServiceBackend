@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using BankServiceBackend.Persistance.Exceptions;
 using BankServiceBackend.Persistance.Repositories;
 
 namespace BankServiceBackend.BusinessLogic.Handler
@@ -13,25 +14,37 @@ namespace BankServiceBackend.BusinessLogic.Handler
             _accountRepository = accountRepository ?? throw new ArgumentNullException(nameof(accountRepository));
         }
 
-        public async Task Deposit(long accountNumber, double amountInEuro, string hashedPin)
+        public async Task DepositAsync(long accountNumber, double amountInEuro, string hashedPin)
         {
-            var persistedAccount = await _accountRepository.GetAsync(accountNumber);
-            persistedAccount.Credit += amountInEuro;
-            await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
+            try
+            {
+                var persistedAccount = await _accountRepository.GetAsync(accountNumber);
+                persistedAccount.Credit += amountInEuro;
+                await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
+            }
+            catch (Exception)
+            {
+                throw new DepositFailedException("Deposit failed!");
+            }
         }
 
         public async Task<bool> Withdraw(long accountNumber, double amountInEuro, string hashedPin)
         {
-            var persistedAccount = await _accountRepository.GetAsync(accountNumber);
-            if (persistedAccount.Credit + persistedAccount.Dispo > amountInEuro)
+            try
             {
-                persistedAccount.Credit -= amountInEuro;
-                await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
-                return true;
-            }
-            else
-            {
+                var persistedAccount = await _accountRepository.GetAsync(accountNumber);
+                if (persistedAccount.Credit + persistedAccount.Dispo >= amountInEuro)
+                {
+                    persistedAccount.Credit -= amountInEuro;
+                    await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
+                    return true;
+                }
+
                 return false;
+            }
+            catch (Exception)
+            {
+                throw new WithdrawFailedException("Deposit failed!");
             }
         }
     }

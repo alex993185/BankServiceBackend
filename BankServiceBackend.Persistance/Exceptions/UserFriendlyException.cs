@@ -2,9 +2,9 @@
 
 namespace BankServiceBackend.Persistance.Exceptions
 {
-    public abstract class PersistenceException : Exception
+    public abstract class UserFriendlyException : Exception
     {
-        public PersistenceException(string message)
+        public UserFriendlyException(string message)
         {
             ReadableMessage = message;
         }

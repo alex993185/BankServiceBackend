@@ -22,7 +22,7 @@ namespace BankServiceBackend.Controllers
         {
             try
             {
-                await _transactionHandler.Deposit(accountNumber, amountInEuro, hashedPin);
+                await _transactionHandler.DepositAsync(accountNumber, amountInEuro, hashedPin);
                 return Ok();
             }
             catch (Exception)
