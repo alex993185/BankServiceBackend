@@ -20,11 +20,12 @@ namespace BankServiceBackend.Controllers
         [Route("deposit")]
         public async Task<ActionResult> Deposit([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
         {
-            if (await _transactionHandler.Deposit(accountNumber, amountInEuro, hashedPin))
+            try
             {
+                await _transactionHandler.Deposit(accountNumber, amountInEuro, hashedPin);
                 return Ok();
             }
-            else
+            catch (Exception)
             {
                 return BadRequest("Deposit failed!");
             }
@@ -33,15 +34,20 @@ namespace BankServiceBackend.Controllers
         [HttpGet]
         [Route("withdraw")]
         public async Task<ActionResult> Withdraw([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
-        {
-            if (await _transactionHandler.Withdraw(accountNumber, amountInEuro, hashedPin))
+        { 
+            try
             {
-                return Ok();
+                if (await _transactionHandler.Withdraw(accountNumber, amountInEuro, hashedPin))
+                {
+                    return Ok();
+                }
             }
-            else
+            catch (Exception)
             {
-                return BadRequest("Withdrawal failed!");
+                // ignored
             }
+
+            return BadRequest("Withdrawal failed!");
         }
     }
 }
