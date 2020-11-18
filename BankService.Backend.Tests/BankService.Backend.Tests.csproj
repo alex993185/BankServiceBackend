@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankServiceBackend\BankServiceBackend.csproj" />
+    <ProjectReference Include="..\BankService.Backend.API\BankService.Backend.API.csproj" />
   </ItemGroup>
 
 </Project>

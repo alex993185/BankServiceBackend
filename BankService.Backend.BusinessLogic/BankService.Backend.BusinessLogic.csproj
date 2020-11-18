@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankServiceBackend.Persistance\BankServiceBackend.Persistance.csproj" />
+    <ProjectReference Include="..\BankService.Backend.Persistance\BankService.Backend.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

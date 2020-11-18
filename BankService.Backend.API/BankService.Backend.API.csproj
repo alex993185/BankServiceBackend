@@ -23,8 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BankServiceBackend.BusinessLogic\BankServiceBackend.BusinessLogic.csproj" />
-    <ProjectReference Include="..\BankServiceBackend.Persistance\BankServiceBackend.Persistance.csproj" />
+    <ProjectReference Include="..\BankService.Backend.BusinessLogic\BankService.Backend.BusinessLogic.csproj" />
+    <ProjectReference Include="..\BankService.Backend.Persistance\BankService.Backend.Persistance.csproj" />
   </ItemGroup>
 
 
