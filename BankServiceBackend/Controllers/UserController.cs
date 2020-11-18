@@ -32,7 +32,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (UserFriendlyException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e.ReadableMessage);
             }
         }
 
@@ -47,7 +47,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (UserFriendlyException e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(e.ReadableMessage);
             }
         }
 
@@ -62,7 +62,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (UserFriendlyException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.ReadableMessage);
             }
         }
 
@@ -77,7 +77,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (UserFriendlyException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.ReadableMessage);
             }
         }
 
@@ -92,7 +92,7 @@ namespace BankServiceBackend.Controllers
             }
             catch (UserFriendlyException e)
             {
-                return BadRequest(e);
+                return BadRequest(e.ReadableMessage);
             }
         }
 

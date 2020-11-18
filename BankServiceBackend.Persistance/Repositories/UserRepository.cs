@@ -45,11 +45,11 @@ namespace BankServiceBackend.Persistance.Repositories
         {
             try
             {
-                await _context.Database.BeginTransactionAsync();
+                //await _context.Database.BeginTransactionAsync();
                 user.CustomerNumber = customerNumber;
                 _context.Update(user);
                 await _context.SaveChangesAsync();
-                await _context.Database.CommitTransactionAsync();
+                //await _context.Database.CommitTransactionAsync();
                 return user;
             }
             catch (InvalidOperationException)
@@ -84,7 +84,7 @@ namespace BankServiceBackend.Persistance.Repositories
                 var user = await GetAsync(customerNumber);
                 if (user != null)
                 {
-                    await _context.Database.BeginTransactionAsync();
+                    //await _context.Database.BeginTransactionAsync();
 
                     // Handle accounts that are linked to user
                     foreach (var userAccount in user.Accounts)
@@ -96,7 +96,7 @@ namespace BankServiceBackend.Persistance.Repositories
                         else
                         {
                             // User can not be deleted because he is linked to an account no other user is linked to
-                            await _context.Database.RollbackTransactionAsync();
+                            //await _context.Database.RollbackTransactionAsync();
                             return null;
                         }
                     }
@@ -104,7 +104,7 @@ namespace BankServiceBackend.Persistance.Repositories
                     _context.Users.Remove(user);
 
                     await _context.SaveChangesAsync();
-                    await _context.Database.CommitTransactionAsync();
+                    //await _context.Database.CommitTransactionAsync();
                 }
 
                 return user;
