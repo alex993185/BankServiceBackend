@@ -98,12 +98,16 @@ namespace BankServiceBackend.Controllers
 
         private UserDTO GetTransferObject(User user)
         {
-            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender };
+            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender.ToString() };
         }
         
         private User GetEntity(UserDTO user)
         {
-            return new User { Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender };
+            if (!Enum.TryParse(user.Gender, out Gender gender))
+            {
+                throw new UserFriendlyException("Gender is not recognized! (Possible: Male, Female, Diverse)");
+            }
+            return new User { Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = gender };
         }
     }
 }
