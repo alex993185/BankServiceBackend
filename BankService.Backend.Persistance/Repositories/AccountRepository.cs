@@ -47,7 +47,7 @@ namespace BankService.Backend.Persistance.Repositories
         {
             try
             {
-                var persistedAccount = await GetAsync(accountNumber);
+                var persistedAccount = await _context.Accounts.FindAsync(accountNumber);
                 if (persistedAccount.HashedPin != hashedPin)
                 {
                     throw new PersistingFailedException("Wrong PIN!");
@@ -104,7 +104,7 @@ namespace BankService.Backend.Persistance.Repositories
         {
             try
             {
-                var account = await GetAsync(accountNumber);
+                var account = await _context.Accounts.Include(a => a.Users).FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
                 if (account != null)
                 {
                     if (account.HashedPin != hashedPin)

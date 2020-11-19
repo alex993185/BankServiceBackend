@@ -51,8 +51,11 @@ namespace BankService.Backend.BusinessLogic.Handler
                 {
                     await _accountRepository.WithdrawAsync(accountNumber, amountInEuro);
                 }
+                else
+                {
+                    throw new WithdrawFailedException("Credit limit exceeded!");
+                }
 
-                throw new WithdrawFailedException("Credit limit exceeded!");
             }
             catch (UserFriendlyException e)
             {
