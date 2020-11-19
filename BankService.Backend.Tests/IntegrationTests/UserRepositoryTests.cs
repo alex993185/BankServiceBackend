@@ -48,8 +48,8 @@ namespace BankService.Backend.Tests.IntegrationTests
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.That(users.Contains(user1), Is.True, $"Expected {user1} is returned!");
-                Assert.That(users.Contains(user2), Is.True, $"Expected {user2} is returned!");
+                Assert.That(users.Any(u => u.CustomerNumber == user1.CustomerNumber), Is.True, $"Expected {user1} is returned!");
+                Assert.That(users.Any(u => u.CustomerNumber == user2.CustomerNumber), Is.True, $"Expected {user2} is returned!");
             });
         }
 
@@ -156,7 +156,7 @@ namespace BankService.Backend.Tests.IntegrationTests
             var updatedUser = await sut.UpdateAsync(customerNumber, user);
 
             // Verify
-            Assert.That(updatedUser.CustomerNumber, Is.EqualTo(user.CustomerNumber), "Customer number must not be changed!");
+            Assert.That(updatedUser.CustomerNumber, Is.EqualTo(customerNumber), "Customer number must not be changed!");
         }
 
         [Test]

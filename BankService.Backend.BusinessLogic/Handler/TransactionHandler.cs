@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using BankService.Backend.BusinessLogic.Exceptions;
+using BankService.Backend.Persistance.Exceptions;
 using BankService.Backend.Persistance.Repositories;
 
 namespace BankService.Backend.BusinessLogic.Handler
@@ -16,11 +18,20 @@ namespace BankService.Backend.BusinessLogic.Handler
 
         public async Task DepositAsync(long accountNumber, double amountInEuro, string hashedPin)
         {
+
             try
             {
-                var persistedAccount = await _accountRepository.GetAsync(accountNumber);
-                persistedAccount.Credit += amountInEuro;
-                await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
+                var account = await _accountRepository.GetAsync(accountNumber);
+                if (account.HashedPin != hashedPin)
+                {
+                    throw new DepositFailedException("Wrong PIN!");
+                }
+
+                await _accountRepository.DepositAsync(accountNumber, amountInEuro);
+            }
+            catch (UserFriendlyException e)
+            {
+                throw new DepositFailedException($"Deposit failed ({e.ReadableMessage})");
             }
             catch (Exception)
             {
@@ -30,21 +41,31 @@ namespace BankService.Backend.BusinessLogic.Handler
 
         public async Task<bool> Withdraw(long accountNumber, double amountInEuro, string hashedPin)
         {
+            
+
             try
             {
-                var persistedAccount = await _accountRepository.GetAsync(accountNumber);
-                if (persistedAccount.Credit + persistedAccount.Dispo >= amountInEuro)
+                var account = await _accountRepository.GetAsync(accountNumber);
+                if (account.HashedPin != hashedPin)
                 {
-                    persistedAccount.Credit -= amountInEuro;
-                    await _accountRepository.UpdateAsync(accountNumber, hashedPin, persistedAccount);
+                    throw new WithdrawFailedException("Wrong PIN!");
+                }
+
+                if (account.Credit + account.Dispo >= amountInEuro)
+                {
+                    await _accountRepository.WithdrawAsync(accountNumber, amountInEuro);
                     return true;
                 }
 
                 return false;
             }
+            catch (UserFriendlyException e)
+            {
+                throw new WithdrawFailedException($"Withdraw failed ({e.ReadableMessage})");
+            }
             catch (Exception)
             {
-                throw new WithdrawFailedException("Deposit failed!");
+                throw new WithdrawFailedException("Withdraw failed!");
             }
         }
     }

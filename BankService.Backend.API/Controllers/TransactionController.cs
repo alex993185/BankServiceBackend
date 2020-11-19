@@ -17,7 +17,7 @@ namespace BankService.Backend.API.Controllers
             _transactionHandler = transactionHandler ?? throw new ArgumentNullException(nameof(transactionHandler));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("deposit")]
         public async Task<ActionResult> Deposit([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
         {
@@ -32,7 +32,7 @@ namespace BankService.Backend.API.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("withdraw")]
         public async Task<ActionResult> Withdraw([FromQuery] long accountNumber, [FromQuery] double amountInEuro, [FromQuery] string hashedPin)
         { 

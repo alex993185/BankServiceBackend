@@ -12,5 +12,7 @@ namespace BankService.Backend.Persistance.Repositories
         Task<Account> SaveAsync(string hashedPin, Account account);
         Task<Account> DeleteAsync(long accountNumber, string hashedPin);
         Task Assign(long accountNumber, long customerNumber);
+        Task DepositAsync(long accountNumber, double amountInEuro);
+        Task WithdrawAsync(long accountNumber, double amountInEuro);
     }
 }

@@ -46,8 +46,8 @@ namespace BankService.Backend.Tests.IntegrationTests
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.That(accounts.Contains(account1), Is.True, $"Expected {account1} is returned!");
-                Assert.That(accounts.Contains(account2), Is.True, $"Expected {account2} is returned!");
+                Assert.That(accounts.Any(a => a.AccountNumber == account1.AccountNumber), Is.True, $"Expected {account1} is returned!");
+                Assert.That(accounts.Any(a => a.AccountNumber == account2.AccountNumber), Is.True, $"Expected {account2} is returned!");
             });
         }
 
@@ -148,7 +148,7 @@ namespace BankService.Backend.Tests.IntegrationTests
             // Arrange
             var sut = new AccountRepository(_dbContext);
             var account = await sut.SaveAsync("Hash", GetDummyAccount());
-            account = await sut.SaveAsync("Hash", account);
+            account = await sut.UpdateAsync(account.AccountNumber, "Hash", account);
 
             // Act & Assert
             var accountNumber = account.AccountNumber + 1;

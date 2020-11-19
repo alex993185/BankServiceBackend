@@ -22,10 +22,10 @@ namespace BankService.Backend.Tests.IntegrationTests
         public void DepositAsync_UnknownAccount_DepositFailedExceptionIsThrown()
         {
             var accountRepositoryMock = new Mock<IAccountRepository>();
-            accountRepositoryMock.Setup(ar => ar.GetAsync(It.IsAny<long>())).Throws(new FetchingFailedException(""));
+            accountRepositoryMock.Setup(ar => ar.GetAsync(1)).Throws(new FetchingFailedException("Account not existing!"));
             var sut = new TransactionHandler(accountRepositoryMock.Object);
 
-            Assert.ThrowsAsync<DepositFailedException>(async () => await sut.DepositAsync(long.MaxValue, 10, "Hash"));
+            Assert.ThrowsAsync<DepositFailedException>(async () => await sut.DepositAsync(1, 10, "Hash"));
         }
 
         [Test]
@@ -34,7 +34,6 @@ namespace BankService.Backend.Tests.IntegrationTests
             var accountRepositoryMock = new Mock<IAccountRepository>();
             var account = new Account {AccountNumber = 1, HashedPin = "Hash"};
             accountRepositoryMock.Setup(ar => ar.GetAsync(1)).Returns(Task.FromResult(account));
-            accountRepositoryMock.Setup(ar => ar.UpdateAsync(1, It.IsAny<string>(), It.IsAny<Account>())).Throws(new PersistingFailedException("Wrong PIN!"));
             var sut = new TransactionHandler(accountRepositoryMock.Object);
 
             Assert.ThrowsAsync<DepositFailedException>(async () => await sut.DepositAsync(1, 10, "WrongHash"));
@@ -56,10 +55,10 @@ namespace BankService.Backend.Tests.IntegrationTests
         public void WithdrawAsync_UnknownAccount_WithdrawFailedExceptionIsThrown()
         {
             var accountRepositoryMock = new Mock<IAccountRepository>();
-            accountRepositoryMock.Setup(ar => ar.GetAsync(It.IsAny<long>())).Throws(new FetchingFailedException(""));
+            accountRepositoryMock.Setup(ar => ar.GetAsync(1)).Throws(new FetchingFailedException("Account not existing!"));
             var sut = new TransactionHandler(accountRepositoryMock.Object);
 
-            Assert.ThrowsAsync<WithdrawFailedException>(async () => await sut.Withdraw(long.MaxValue, 10, "Hash"));
+            Assert.ThrowsAsync<WithdrawFailedException>(async () => await sut.Withdraw(1, 10, "Hash"));
         }
 
         [Test]

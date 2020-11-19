@@ -17,7 +17,7 @@ namespace BankService.Backend.API.Controllers
             _accountAssignmentHandler = accountAssignmentHandler ?? throw new ArgumentNullException(nameof(accountAssignmentHandler));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("assign")]
         public async Task<ActionResult> Assign([FromQuery] long accountNumber, [FromQuery] long customerNumber, [FromQuery] string hashedPin)
         {

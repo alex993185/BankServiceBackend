@@ -34,7 +34,7 @@ namespace BankService.Backend.Persistance.Repositories
             try
             {
                 var account = await _context.Accounts.Include(a => a.Users).AsNoTracking().FirstAsync(a => a.AccountNumber == accountNumber);
-            return account;
+                return account;
             }
             catch (Exception e)
             {
@@ -153,13 +153,36 @@ namespace BankService.Backend.Persistance.Repositories
             {
                 account.Users.Add(user);
                 user.Accounts.Add(account);
-                _context.Update(user);
                 await _context.SaveChangesAsync();
             }
             else
             {
                 throw new UserFriendlyException("Account already assigned to the user!");
             }
+        }
+
+        public async Task DepositAsync(long accountNumber, double amountInEuro)
+        {
+            var account = await _context.Accounts.Include(a => a.Users).FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                throw new UserFriendlyException("Account not found!");
+            }
+
+            account.Credit += amountInEuro;
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task WithdrawAsync(long accountNumber, double amountInEuro)
+        {
+            var account = await _context.Accounts.Include(a => a.Users).FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            if (account == null)
+            {
+                throw new UserFriendlyException("Account not found!");
+            }
+
+            account.Credit -= amountInEuro;
+            await _context.SaveChangesAsync();
         }
     }
 }
