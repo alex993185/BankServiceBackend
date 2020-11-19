@@ -21,7 +21,8 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -53,7 +54,8 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -85,7 +87,8 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -132,12 +135,13 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"TestAccount\",\r\n  \"dispo\": 100\r\n}",
+							"raw": "{\r\n  \"name\": \"TestAccountChanged\",\r\n  \"dispo\": 222\r\n}",
 							"options": {
 								"raw": {
 									"language": "text"
@@ -145,7 +149,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/accounts/?hashedPin=Hash&accountNumber=3",
+							"raw": "http://localhost:8080/api/accounts/?hashedPin=Hash&accountNumber=2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -163,7 +167,7 @@
 								},
 								{
 									"key": "accountNumber",
-									"value": "3"
+									"value": "2"
 								}
 							]
 						}
@@ -183,7 +187,8 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -231,7 +236,8 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -263,11 +269,12 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/accounts/1",
+							"raw": "http://localhost:8080/api/users/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -275,7 +282,7 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"accounts",
+								"users",
 								"1"
 							]
 						}
@@ -336,12 +343,13 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"TestUserNameChanged\",\r\n  \"firstName\": \"FirstName\",\r\n  \"birthday\": \"2000-11-18T17:12:31.244Z\",\r\n  \"gender\": 1\r\n}",
+							"raw": "{\r\n  \"name\": \"TestUserNameChanged\",\r\n  \"firstName\": \"FirstName\",\r\n  \"birthday\": \"2000-11-18T17:12:31.244Z\",\r\n  \"gender\": \"Male\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "text"
@@ -377,11 +385,12 @@
 							{
 								"key": "Authentication",
 								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiYXVkIjoiYWxsIiwibmJmIjoxNTk0MzY3NTc3LCJpc3MiOiJTZWVUZWMuQlZJIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvbmFtZSI6ImFkbWluaXN0cmF0b3IiLCJleHAiOjE1OTQ0NTM5Nzd9.h_Zig0lVRX-rAyN5pUwTYfsM_pDcfoz_jye3iwR5EDY",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/users/3",
+							"raw": "http://localhost:8080/api/users/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -390,7 +399,7 @@
 							"path": [
 								"api",
 								"users",
-								"3"
+								"2"
 							]
 						}
 					},
@@ -405,10 +414,10 @@
 				{
 					"name": "Deposit",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/Transaction/deposit?accountNumber=4&amountInEuro=100&hashedPin=Hash",
+							"raw": "http://localhost:8080/api/Transaction/deposit?accountNumber=1&amountInEuro=100&hashedPin=Hash",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -422,7 +431,7 @@
 							"query": [
 								{
 									"key": "accountNumber",
-									"value": "4"
+									"value": "1"
 								},
 								{
 									"key": "amountInEuro",
@@ -440,7 +449,7 @@
 				{
 					"name": "Withdrawal",
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/api/Transaction/withdraw?accountNumber=1&amountInEuro=100&hashedPin=Hash",
@@ -462,6 +471,47 @@
 								{
 									"key": "amountInEuro",
 									"value": "100"
+								},
+								{
+									"key": "hashedPin",
+									"value": "Hash"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "AccountAssignment",
+			"item": [
+				{
+					"name": "AssignUserToAccount",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/AccountAssignment/assign?accountNumber=1&customerNumber=1&hashedPin=Hash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"AccountAssignment",
+								"assign"
+							],
+							"query": [
+								{
+									"key": "accountNumber",
+									"value": "1"
+								},
+								{
+									"key": "customerNumber",
+									"value": "1"
 								},
 								{
 									"key": "hashedPin",
