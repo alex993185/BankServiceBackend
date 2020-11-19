@@ -56,8 +56,8 @@ namespace BankService.Backend.Persistance.Repositories
                 persistedAccount.Dispo = account.Dispo;
                 persistedAccount.Name = account.Name;
                 await _context.SaveChangesAsync();
-                _context.Entry(account).State = EntityState.Detached;
-                return account;
+                _context.Entry(persistedAccount).State = EntityState.Detached;
+                return persistedAccount;
             }
             catch (PersistingFailedException e)
             {
