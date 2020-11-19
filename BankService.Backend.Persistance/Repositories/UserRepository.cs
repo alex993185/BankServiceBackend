@@ -21,7 +21,7 @@ namespace BankService.Backend.Persistance.Repositories
         {
             try
             {
-                return await _context.Users.ToListAsync();
+                return await _context.Users.Include(u => u.Accounts).AsNoTracking().ToListAsync();
             }
             catch (Exception)
             {
@@ -32,12 +32,13 @@ namespace BankService.Backend.Persistance.Repositories
 
         public async Task<User> GetAsync(long customerNumber)
         {
-            var user = await _context.Users.FindAsync(customerNumber);
+            var user = await _context.Users.Include(u => u.Accounts).AsNoTracking().FirstOrDefaultAsync(u => u.CustomerNumber == customerNumber);
             if (user == null)
             {
                 throw new FetchingFailedException($"Customer number {customerNumber} is unknown!");
             }
 
+            _context.Entry(user).State = EntityState.Detached;
             return user;
         }
 
@@ -45,10 +46,14 @@ namespace BankService.Backend.Persistance.Repositories
         {
             try
             {
-                user.CustomerNumber = customerNumber;
-                _context.Update(user);
+                var persistedUser = await _context.Users.FindAsync(customerNumber);
+                persistedUser.Birthday = user.Birthday;
+                persistedUser.Name = user.Name;
+                persistedUser.FirstName = user.FirstName;
+                persistedUser.Gender = user.Gender;
                 await _context.SaveChangesAsync();
-                return user;
+                _context.Entry(persistedUser).State = EntityState.Detached;
+                return persistedUser;
             }
             catch (InvalidOperationException)
             {
@@ -66,6 +71,7 @@ namespace BankService.Backend.Persistance.Repositories
             {
                 user = _context.Users.Add(user).Entity;
                 await _context.SaveChangesAsync();
+                _context.Entry(user).State = EntityState.Detached;
             }
             catch (Exception)
             {
@@ -99,6 +105,7 @@ namespace BankService.Backend.Persistance.Repositories
                     _context.Users.Remove(user);
 
                     await _context.SaveChangesAsync();
+                    _context.Entry(user).State = EntityState.Detached;
                 }
 
                 return user;

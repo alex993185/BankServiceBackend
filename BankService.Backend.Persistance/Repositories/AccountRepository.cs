@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BankService.Backend.Persistance.Entities;
 using BankService.Backend.Persistance.Exceptions;
@@ -20,7 +21,7 @@ namespace BankService.Backend.Persistance.Repositories
         {
             try
             {
-                return await _context.Accounts.ToListAsync();
+                return await _context.Accounts.Include(a => a.Users).AsNoTracking().ToListAsync();
             }
             catch (Exception)
             {
@@ -30,14 +31,16 @@ namespace BankService.Backend.Persistance.Repositories
 
         public async Task<Account> GetAsync(long accountNumber)
         {
-            var account = await _context.Accounts.FindAsync(accountNumber);
-            Console.WriteLine(account == null);
-            if (account == null)
+            try
             {
-                throw new FetchingFailedException($"Account number {account} is unknown!");
-            }
-
+                var account = await _context.Accounts.Include(a => a.Users).AsNoTracking().FirstAsync(a => a.AccountNumber == accountNumber);
             return account;
+            }
+            catch (Exception e)
+            {
+                throw new FetchingFailedException($"Account number {accountNumber} is unknown!");
+            }
+          
         }
 
         public async Task<Account> UpdateAsync(long accountNumber, string hashedPin, Account account)
@@ -52,8 +55,8 @@ namespace BankService.Backend.Persistance.Repositories
 
                 persistedAccount.Dispo = account.Dispo;
                 persistedAccount.Name = account.Name;
-                _context.Update(persistedAccount);
                 await _context.SaveChangesAsync();
+                _context.Entry(account).State = EntityState.Detached;
                 return account;
             }
             catch (PersistingFailedException e)
@@ -83,6 +86,7 @@ namespace BankService.Backend.Persistance.Repositories
                 account.HashedPin = hashedPin;
                 account = _context.Accounts.Add(account).Entity;
                 await _context.SaveChangesAsync();
+                _context.Entry(account).State = EntityState.Detached;
             }
             catch (PersistingFailedException e)
             {
@@ -121,6 +125,7 @@ namespace BankService.Backend.Persistance.Repositories
                     _context.Accounts.Remove(account);
 
                     await _context.SaveChangesAsync();
+                    _context.Entry(account).State = EntityState.Detached;
                 }
 
                 return account;
@@ -132,6 +137,28 @@ namespace BankService.Backend.Persistance.Repositories
             catch (Exception)
             {
                 throw new RemovingFailedException($"Removing user with customer number = {accountNumber} failed!");
+            }
+        }
+
+        public async Task Assign(long accountNumber, long customerNumber)
+        {
+            var account = await _context.Accounts.Include(a => a.Users).FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            var user = await _context.Users.Include(u => u.Accounts).FirstOrDefaultAsync(u => u.CustomerNumber == customerNumber);
+            if (account == null || user == null)
+            {
+                throw new UserFriendlyException("Account or user not found!");
+            }
+
+            if (account.Users.All(u => u.CustomerNumber != user.CustomerNumber))
+            {
+                account.Users.Add(user);
+                user.Accounts.Add(account);
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                throw new UserFriendlyException("Account already assigned to the user!");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BankService.Backend.API.Entities
@@ -18,5 +19,7 @@ namespace BankService.Backend.API.Entities
 
         [Required]
         public string Gender { get; set; }
+
+        public List<AccountDTO> Accounts { get; set; }
     }
 }

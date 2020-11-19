@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BankService.Backend.API.Entities;
 using BankService.Backend.Persistance.Entities;
 using BankService.Backend.Persistance.Enums;
@@ -21,7 +22,7 @@ namespace BankService.Backend.API.Extensions
 
         public static UserDTO GetTransferObject(this User user)
         {
-            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender.ToString() };
+            return new UserDTO { CustomerNumber = user.CustomerNumber, Birthday = user.Birthday, FirstName = user.FirstName, Name = user.Name, Gender = user.Gender.ToString(), Accounts = user.Accounts.Select(a => a.GetTransferObject()).ToList() };
         }
 
         public static User GetEntity(this UserDTO user)

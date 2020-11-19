@@ -40,6 +40,7 @@ namespace BankService.Backend.API
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IAccountRepository, AccountRepository>();
             services.AddTransient<ITransactionHandler, TransactionHandler>();
+            services.AddTransient<IAccountAssignmentHandler, AccountAssignmentHandler>();
             services.AddSwaggerGen();
         }
 
