@@ -37,7 +37,7 @@ namespace BankService.Backend.BusinessLogic.Handler
             }
         }
 
-        public async Task<bool> Withdraw(long accountNumber, double amountInEuro, string hashedPin)
+        public async Task Withdraw(long accountNumber, double amountInEuro, string hashedPin)
         {
             try
             {
@@ -50,10 +50,9 @@ namespace BankService.Backend.BusinessLogic.Handler
                 if (account.Credit + account.Dispo >= amountInEuro)
                 {
                     await _accountRepository.WithdrawAsync(accountNumber, amountInEuro);
-                    return true;
                 }
 
-                return false;
+                throw new WithdrawFailedException("Credit limit exceeded!");
             }
             catch (UserFriendlyException e)
             {

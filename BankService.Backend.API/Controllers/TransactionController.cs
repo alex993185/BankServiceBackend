@@ -38,12 +38,8 @@ namespace BankService.Backend.API.Controllers
         { 
             try
             {
-                if (await _transactionHandler.Withdraw(accountNumber, amountInEuro, hashedPin))
-                {
-                    return Ok();
-                }
-
-                return BadRequest();
+               await _transactionHandler.Withdraw(accountNumber, amountInEuro, hashedPin);
+               return Ok();
             }
             catch (WithdrawFailedException e)
             {
