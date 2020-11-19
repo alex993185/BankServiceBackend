@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Threading.Tasks;
 using BankService.Backend.BusinessLogic.Exceptions;
 using BankService.Backend.Persistance.Exceptions;
@@ -18,7 +17,6 @@ namespace BankService.Backend.BusinessLogic.Handler
 
         public async Task DepositAsync(long accountNumber, double amountInEuro, string hashedPin)
         {
-
             try
             {
                 var account = await _accountRepository.GetAsync(accountNumber);
@@ -41,8 +39,6 @@ namespace BankService.Backend.BusinessLogic.Handler
 
         public async Task<bool> Withdraw(long accountNumber, double amountInEuro, string hashedPin)
         {
-            
-
             try
             {
                 var account = await _accountRepository.GetAsync(accountNumber);

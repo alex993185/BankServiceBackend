@@ -9,12 +9,14 @@ using KellermanSoftware.CompareNetObjects;
 using NUnit.Framework;
 
 namespace BankService.Backend.Tests.IntegrationTests
-{ /**
+{
+    /**
      * <summary>
      * This test class runs account repository tests against a real Postgres.
      * </summary>
      */
     [TestFixture]
+    [Category("IntegrationTests")]
     public class AccountRepositoryTests
     {
         private BankServiceDbContext _dbContext;

@@ -18,6 +18,7 @@ namespace BankService.Backend.Tests.IntegrationTests
      * </summary>
      */
     [TestFixture]
+    [Category("IntegrationTests")]
     public class UserRepositoryTests
     {
         private BankServiceDbContext _dbContext;

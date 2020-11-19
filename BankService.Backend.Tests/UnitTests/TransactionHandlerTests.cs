@@ -7,9 +7,10 @@ using BankService.Backend.Persistance.Repositories;
 using Moq;
 using NUnit.Framework;
 
-namespace BankService.Backend.Tests.IntegrationTests
+namespace BankService.Backend.Tests.UnitTests
 {
     [TestFixture]
+    [Category("UnitTests")]
     public class TransactionHandlerTests
     {
         [Test]
