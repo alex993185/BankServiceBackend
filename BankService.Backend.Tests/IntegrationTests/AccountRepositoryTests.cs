@@ -141,7 +141,7 @@ namespace BankService.Backend.Tests.IntegrationTests
             var updatedAccount = await sut.UpdateAsync(accountNumber, "Hash", account);
 
             // Verify
-            Assert.That(updatedAccount.AccountNumber, Is.EqualTo(account.AccountNumber), "Account number must not be changed!");
+            Assert.That(updatedAccount.AccountNumber, Is.EqualTo(accountNumber), "Account number must not be changed!");
         }
 
         [Test]
@@ -162,7 +162,6 @@ namespace BankService.Backend.Tests.IntegrationTests
             return new Account
             {
                 Name = "TestAccount",
-                Users = new List<User> { new User { Name = "TestUser" } },
                 HashedPin = "Hash",
                 Credit = 10,
                 Dispo = 1000
