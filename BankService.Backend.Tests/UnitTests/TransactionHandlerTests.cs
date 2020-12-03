@@ -88,7 +88,15 @@ namespace BankService.Backend.Tests.UnitTests
             accountRepositoryMock.Setup(ar => ar.UpdateAsync(1, It.IsAny<string>(), It.IsAny<Account>())).Returns(Task.FromResult(new Account { AccountNumber = 1, Credit = 0 }));
             var sut = new TransactionHandler(accountRepositoryMock.Object);
 
-            Assert.That(async () => await sut.Withdraw(1, 100, "Hash"), Is.EqualTo(isWithdrawalSuccessful));
+            if (isWithdrawalSuccessful)
+            {
+                Assert.That(async () => await sut.Withdraw(1, 100, "Hash"), Throws.Nothing);
+            }
+            else
+            {
+                Assert.That(async () => await sut.Withdraw(1, 100, "Hash"), Throws.Exception);
+            } 
+
         }
     }
 }
