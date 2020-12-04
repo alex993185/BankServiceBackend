@@ -82,6 +82,7 @@ namespace BankService.Backend.Persistance.Repositories
                     throw new PersistingFailedException("There must be a PIN entered!");
                 }
 
+                account.AccountNumber = 0;
                 account.Credit = 0;
                 account.HashedPin = hashedPin;
                 account = _context.Accounts.Add(account).Entity;
