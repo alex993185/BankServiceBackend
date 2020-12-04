@@ -36,7 +36,7 @@ namespace BankService.Backend.Persistance.Repositories
                 var account = await _context.Accounts.Include(a => a.Users).AsNoTracking().FirstAsync(a => a.AccountNumber == accountNumber);
                 return account;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new FetchingFailedException($"Account number {accountNumber} is unknown!");
             }
@@ -48,6 +48,12 @@ namespace BankService.Backend.Persistance.Repositories
             try
             {
                 var persistedAccount = await _context.Accounts.FindAsync(accountNumber);
+                if (persistedAccount == null)
+                {
+                    throw new PersistingFailedException(
+                        $"Account number {accountNumber} is unknown. Updating {account} failed!");
+                }
+
                 if (persistedAccount.HashedPin != hashedPin)
                 {
                     throw new PersistingFailedException("Wrong PIN!");
@@ -62,10 +68,6 @@ namespace BankService.Backend.Persistance.Repositories
             catch (PersistingFailedException e)
             {
                 throw e;
-            }
-            catch (InvalidOperationException e)
-            {
-                throw new PersistingFailedException($"Account number {accountNumber} is unknown. Updating {account} failed!");
             }
             catch (Exception)
             {
